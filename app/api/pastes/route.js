@@ -18,16 +18,15 @@ export async function POST(request) {
     id,
     content,
     createdAt: now,
-    expiresAt: ttl_seconds ? now + ttl_seconds * 1000 : null,
-    maxViews: max_views ?? null,
+    expiresAt: typeof ttl_seconds === "number" && Number.isFinite(ttl_seconds) && ttl_seconds > 0 ? now + ttl_seconds * 1000 : null,
+    maxViews: typeof max_views === "number" && Number.isFinite(max_views) && max_views > 0 ? max_views : null,
     viewsUsed: 0,
   };
 
-  await redis.set(`paste:${id}`, paste);
+  await redis.set(`paste:${id}`, JSON.stringify(paste));
 
   return NextResponse.json({
-    id,
-    url: `http://localhost:3000/p/${id}`,
+    id
   });
 }
 

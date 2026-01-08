@@ -21,15 +21,21 @@ export default function Home() {
       headers: { "Content-Type": "application/json" },
       body: JSON.stringify({
         content,
-        ttl_seconds: Number(ttlSeconds),
-        max_views: Number(maxViews),
+        ttl_seconds: ttlSeconds === "" ? null : Number(ttlSeconds),
+        max_views: maxViews === "" ? null : Number(maxViews),
       }),
     });
 
     const data = await res.json();
-    if (data.url) setResult(data.url);
-    else setError(data.error || "Something went wrong.");
-  }
+    
+    if (!res.ok) {
+      setError(data.error || "Something went wrong.");
+      return;
+    }
+    setResult(`${window.location.origin}/p/${data.id}`);
+    
+    }
+    
 
   return (
     <div
@@ -65,6 +71,7 @@ export default function Home() {
         <label>Time To Live (seconds):</label>
         <input
           type="number"
+          min="1"
           placeholder="e.g. 3600"
           style={{
             width: "100%",
@@ -82,6 +89,7 @@ export default function Home() {
         <label>Maximum Views:</label>
         <input
           type="number"
+          min="1"
           placeholder="e.g. 3"
           style={{
             width: "100%",

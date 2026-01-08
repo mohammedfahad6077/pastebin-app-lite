@@ -1,14 +1,22 @@
 import { notFound } from "next/navigation";
 export default async function PastePage({ params }) {
   const { id } = await params;
+  const baseUrl = process.env.NEXT_PUBLIC_BASE_URL;
 
-  const res = await fetch(
-    `http://localhost:3000/api/pastes/${id}`,
+  /*const res = await fetch(
+    `/api/pastes/${id}`,
     { cache: "no-store" }
-  );
+  );*/
 
   
-  if (res.status === 404) {
+
+  const res = await fetch(
+    `${baseUrl}/api/pastes/${id}`,
+    { cache: "no-store" }
+  )
+
+  
+  if (!res.ok) {
     notFound();  //This makes http 404
   }
   
@@ -46,7 +54,7 @@ export default async function PastePage({ params }) {
 
       <div style={{ marginTop: "15px", fontSize: "14px", color: "#555" }}>
         <p>Remaining Views: {data.remaining_views ?? "Unlimited"}</p>
-        <p>Expires At: {data.expires_at}</p>
+        <p>Expires At: {data.expires_at ?? "Never" }</p>
       </div>
     </div>
   );
