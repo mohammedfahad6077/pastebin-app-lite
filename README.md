@@ -1,6 +1,12 @@
-This is a [Next.js](https://nextjs.org) project bootstrapped with [`create-next-app`](https://nextjs.org/docs/app/api-reference/cli/create-next-app).
+# Pastebin App Lite
 
-## Getting Started
+## 📄 Project Description
+
+Pastebin App Lite is a lightweight web application built with Next.js that allows users to create and share text snippets (pastes) via a unique URL.
+Each paste can optionally have a time-to-live (TTL) and/or a maximum view limit, after which the paste becomes unavailable.
+
+## 🚀 Run the Project Locally
+1. Clone the repository
 
 First, run the development server:
 
