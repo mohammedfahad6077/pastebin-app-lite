@@ -8,35 +8,56 @@ Each paste can optionally have a time-to-live (TTL) and/or a maximum view limit,
 ## 🚀 Run the Project Locally
 1. Clone the repository
 
-First, run the development server:
+```bash
+git clone <repository-url>
+cd pastebin-app-lite
+```
+2. Install dependencies
 
 ```bash
-npm run dev
-# or
-yarn dev
-# or
-pnpm dev
-# or
-bun dev
+npm install
 ```
+3. Create environment variables
 
-Open [http://localhost:3000](http://localhost:3000) with your browser to see the result.
+Create a file named .env.local in the project root and add:
+```bash
+UPSTASH_REDIS_REST_URL=<your_redis_rest_url>
+UPSTASH_REDIS_REST_TOKEN=<your_redis_rest_token>
+NEXT_PUBLIC_BASE_URL=http://localhost:3000
+TEST_MODE=0
+```
+4. Start the development server
+```bash
+npm run dev
+```
+Open the app in your browser at:
+http://localhost:3000
 
-You can start editing the page by modifying `app/page.tsx`. The page auto-updates as you edit the file.
+# 🗄️ Persistence Layer
 
-This project uses [`next/font`](https://nextjs.org/docs/app/building-your-application/optimizing/fonts) to automatically optimize and load [Geist](https://vercel.com/font), a new font family for Vercel.
+This project uses Upstash Redis as the persistence layer.
 
-## Learn More
+Paste data is stored as JSON objects in Redis
 
-To learn more about Next.js, take a look at the following resources:
+Each paste is keyed using a unique identifier
 
-- [Next.js Documentation](https://nextjs.org/docs) - learn about Next.js features and API.
-- [Learn Next.js](https://nextjs.org/learn) - an interactive Next.js tutorial.
+Redis enables fast reads/writes and supports TTL-based expiry
 
-You can check out [the Next.js GitHub repository](https://github.com/vercel/next.js) - your feedback and contributions are welcome!
+View limits and expiration logic are enforced at request time
 
-## Deploy on Vercel
+# 📁 Repository Contents
 
-The easiest way to deploy your Next.js app is to use the [Vercel Platform](https://vercel.com/new?utm_medium=default-template&filter=next.js&utm_source=create-next-app&utm_campaign=create-next-app-readme) from the creators of Next.js.
+This repository contains:
+
+Next.js application source code
+
+API routes for paste creation and retrieval
+
+UI pages for creating and viewing pastes
+
+No build artifacts are committed.
+
+
+
 
 Check out our [Next.js deployment documentation](https://nextjs.org/docs/app/building-your-application/deploying) for more details.
